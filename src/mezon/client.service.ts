@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { MezonClient } from 'mezon-sdk';
-import { MezonClientConfig } from './types/config';
 import {
   ReactMessageChannel,
   ReplyMezonMessage,
@@ -11,8 +10,8 @@ export class MezonClientService {
   private readonly logger = new Logger(MezonClientService.name);
   private client: MezonClient;
 
-  constructor(clientConfigs: MezonClientConfig) {
-    this.client = new MezonClient(clientConfigs.token);
+  constructor(token: string) {
+    this.client = new MezonClient(token);
   }
 
   async initializeClient() {
