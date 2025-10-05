@@ -1,15 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import {
-  ApiMessageReaction,
   MezonClient,
-  Events,
-  TokenSentEvent,
-  UserChannelRemoved,
-  UserChannelAddedEvent,
 } from 'mezon-sdk';
 import { MezonClientService } from 'src/mezon/client.service';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { BOT_ID } from '../constants/config';
+import { CommandHandler } from '../handlers/command.handler';
 
 @Injectable()
 export class BotGateway {
@@ -18,36 +12,24 @@ export class BotGateway {
 
   constructor(
     private clientService: MezonClientService,
-    private eventEmitter: EventEmitter2,
+    private commandHandler: CommandHandler
   ) {
     this.client = clientService.getClient();
   }
 
   initEvent() {
-    this.client.onTokenSend((data: TokenSentEvent) => {
-      this.eventEmitter.emit(Events.TokenSend, data);
-    });
-
-    this.client.onMessageButtonClicked((data) => {
-      this.eventEmitter.emit(Events.MessageButtonClicked, data);
-    });
-
-    this.client.onMessageReaction((msg: ApiMessageReaction) => {
-      this.eventEmitter.emit(Events.MessageReaction, msg);
-    });
-
-    this.client.onUserChannelAdded((user: UserChannelAddedEvent) => {
-      this.eventEmitter.emit(Events.UserChannelAdded, user);
-    });
-
-    this.client.onUserChannelRemoved((msg: UserChannelRemoved) => {
-      this.eventEmitter.emit(Events.UserChannelRemoved, msg);
-    });
-
-    this.client.onChannelMessage(async (message) => {
-      if (message.sender_id && message.sender_id !== BOT_ID) {
-        this.eventEmitter.emit(Events.ChannelMessage, message);
-      }
-    });
+    this.client.on("error", (error) => console.error(`Mezon Error: ${error}`));
+    this.client.on("disconnect", (reason) =>
+      console.log(`Disconnected: ${reason}`),
+    );
+    this.client.on("ready", () =>
+      console.log(`Connected: ${this.client.clans.size}`),
+    );
+    this.client.onChannelMessage(
+      this.commandHandler.handleMessage.bind(this.commandHandler),
+    );
+    this.client.onMessageButtonClicked(
+      this.commandHandler.handleMessageButtonClicked.bind(this.commandHandler),
+    );
   }
 }

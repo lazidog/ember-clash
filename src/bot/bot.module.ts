@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { DiscoveryModule } from '@nestjs/core';
-import { ChannelMessageEventHandler } from './handlers/channelMessage.handler';
 import { BotGateway } from './events/bot.gateway';
+import { CommandHandler } from './handlers/command.handler';
 
 @Module({
   imports: [DiscoveryModule],
   providers: [
     BotGateway,
-    ChannelMessageEventHandler
+    CommandHandler
   ],
   controllers: [],
 })
