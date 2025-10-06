@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MezonModule } from './mezon/mezon.module';
-import { BotModule } from './bot/bot.module';
+import { CommandModule } from './bot/command.module';
 
 @Module({
   imports: [
     MezonModule.forRootAsync(),
-    BotModule,
+    CommandModule,
   ],
 })
 export class AppModule {}
