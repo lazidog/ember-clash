@@ -1,6 +1,7 @@
 import type { ChannelMessage, MezonClient } from "mezon-sdk";
 import type { MessageButtonClicked } from "mezon-sdk/dist/cjs/rtapi/realtime";
 import type { CommandBase } from "../application/commands/base";
+import { MezonClientService } from "src/infra/mezon/client.service";
 
 /**
  * Represents the constructor type of a Command class.
@@ -15,7 +16,7 @@ export type CommandClass<
   TMessage extends MessageType = MessageType,
   T extends CommandBase = CommandBase,
 > = {
-  new (client: MezonClient, message: TMessage): T;
+  new (clientService: MezonClientService, message: TMessage): T;
 };
 
 export enum CommandName {

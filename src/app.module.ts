@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { MezonModule } from './mezon/mezon.module';
-import { CommandModule } from './bot/command.module';
+import { MezonModule } from './infra/mezon/mezon.module';
+import { CommandModule } from './infra/bot/command.module';
 
 @Module({
   imports: [

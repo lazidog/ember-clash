@@ -1,13 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import {
   MezonClient,
 } from 'mezon-sdk';
-import { MezonClientService } from 'src/mezon/client.service';
-import { CommandHandler } from '../handlers/command.handler';
+import { MezonClientService } from 'src/infra/mezon/client.service';
+import { CommandHandler } from './infra/bot/command.handler';
 
 @Injectable()
-export class BotGateway {
-  private readonly logger = new Logger(BotGateway.name);
+export class AppGateway {
+  private readonly logger = new Logger(AppGateway.name);
   private client: MezonClient;
 
   constructor(
