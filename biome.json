@@ -16,7 +16,8 @@
         "useEnumInitializers": "off"
       },
       "complexity": {
-        "noUselessConstructor": "off"
+        "noUselessConstructor": "off",
+        "noStaticOnlyClass": "off"
       }
     }
   },

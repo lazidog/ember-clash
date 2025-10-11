@@ -1,7 +1,7 @@
-import type { ChannelMessage, MezonClient } from "mezon-sdk";
+import type { ChannelMessage } from "mezon-sdk";
 import type { MessageButtonClicked } from "mezon-sdk/dist/cjs/rtapi/realtime";
+import type { MezonClientService } from "src/infra/mezon/client.service";
 import type { CommandBase } from "../application/commands/base";
-import { MezonClientService } from "src/infra/mezon/client.service";
 
 /**
  * Represents the constructor type of a Command class.

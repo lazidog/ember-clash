@@ -1,9 +1,7 @@
-import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
-import {
-  MezonClient,
-} from 'mezon-sdk';
-import { MezonClientService } from 'src/infra/mezon/client.service';
-import { CommandHandler } from './infra/bot/command.handler';
+import { Injectable, Logger } from "@nestjs/common";
+import type { MezonClient } from "mezon-sdk";
+import type { MezonClientService } from "src/infra/mezon/client.service";
+import type { CommandHandler } from "./infra/bot/command.handler";
 
 @Injectable()
 export class AppGateway {
@@ -12,7 +10,7 @@ export class AppGateway {
 
   constructor(
     private clientService: MezonClientService,
-    private commandHandler: CommandHandler
+    private commandHandler: CommandHandler,
   ) {
     this.client = clientService.getClient();
   }

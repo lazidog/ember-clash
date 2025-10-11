@@ -1,8 +1,8 @@
-import { type CommandMessage, CommandName } from "../../domain/types";
 import { TypeMessage } from "mezon-sdk";
-import { CommandBase } from "./base";
-import { MezonClientService } from "src/infra/mezon/client.service";
 import { Command } from "src/infra/decorators/registerCommand.decorator";
+import type { MezonClientService } from "src/infra/mezon/client.service";
+import { type CommandMessage, CommandName } from "../../domain/types";
+import { CommandBase } from "./base";
 
 @Command(CommandName.Pika)
 export class PikaCommand extends CommandBase<CommandMessage> {

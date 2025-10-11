@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { ModuleRef } from "@nestjs/core";
-import type { ChannelMessage, MezonClient } from "mezon-sdk";
+import type { ModuleRef } from "@nestjs/core";
+import type { ChannelMessage } from "mezon-sdk";
 import type { MessageButtonClicked } from "mezon-sdk/dist/cjs/rtapi/realtime";
 import { CommandBase } from "src/application/commands/base";
-import { ActionMessage, CommandMessage } from "src/domain/types";
+import type { ActionMessage, CommandMessage } from "src/domain/types";
 import { getAction, getCommand } from "src/infra/storages/command.storage";
 
 import { extractActionMessage, extractCommandMessage } from "src/utils";
