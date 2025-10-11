@@ -1,8 +1,8 @@
-import type { MessageType } from "../../domain/types";
 import type { MezonClient } from "mezon-sdk";
 import type { Message as MezonMessage } from "mezon-sdk/dist/cjs/mezon-client/structures/Message";
 import type { TextChannel } from "mezon-sdk/dist/cjs/mezon-client/structures/TextChannel";
-import { MezonClientService } from "src/infra/mezon/client.service";
+import type { MezonClientService } from "src/infra/mezon/client.service";
+import type { MessageType } from "../../domain/types";
 
 export abstract class CommandBase<TMessage extends MessageType = MessageType> {
   protected client: MezonClient;
