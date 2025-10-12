@@ -1,4 +1,4 @@
-import type { CommandRegistry } from "../../domain/types";
+import { CommandRegistry } from "../../domain/types";
 import { registerCommand } from "../storages/command.storage";
 
 /**

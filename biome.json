@@ -13,7 +13,8 @@
         "useButtonType": "off"
       },
       "style": {
-        "useEnumInitializers": "off"
+        "useEnumInitializers": "off",
+        "useImportType": "off"
       },
       "complexity": {
         "noUselessConstructor": "off",

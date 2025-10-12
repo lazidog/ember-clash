@@ -1,4 +1,4 @@
-import { EMessageComponentType, type SelectComponent } from "mezon-sdk";
+import { EMessageComponentType, SelectComponent } from "mezon-sdk";
 
 export class SelectionBuilder {
   private readonly _selection: SelectComponent;

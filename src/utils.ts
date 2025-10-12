@@ -1,5 +1,5 @@
-import type { MessageButtonClicked } from "mezon-sdk/dist/cjs/rtapi/realtime";
-import type { ActionOnlyName, CommandOnlyName } from "./domain/types";
+import { MessageButtonClicked } from "mezon-sdk/dist/cjs/rtapi/realtime";
+import { ActionOnlyName, CommandOnlyName } from "./domain/types";
 
 export function extractCommandMessage(message: string) {
   const trimmedMessage = message.replace("\n", " ").slice("*".length).trim();
