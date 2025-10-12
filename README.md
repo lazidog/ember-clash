@@ -1,6 +1,6 @@
 # Mezon Bot: Ember Clash
 
-[![NestJS](https://img.shields.io/badge/NestJS-^10.0-red)](https://nestjs.com/) [![TypeScript](https://img.shields.io/badge/TypeScript-^5.0-blue)](https://www.typescriptlang.org/) [![Postgres](https://img.shields.io/badge/Postgres-^15-green)](https://www.postgresql.org/) [![Vitest](https://img.shields.io/badge/Vitest-^2.0-yellow)](https://vitest.dev/) [![License: MIT](https://img.shields.io/badge/License-MIT-purple)](LICENSE)
+[![NestJS](https://img.shields.io/badge/NestJS-^10.0-red)](https://nestjs.com/) [![TypeScript](https://img.shields.io/badge/TypeScript-^5.0-blue)](https://www.typescriptlang.org/) [![Postgres](https://img.shields.io/badge/Postgres-^15-green)](https://www.postgresql.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-purple)](LICENSE)
 
 EmberClash là một bot game RPG casual dành cho nền tảng Mezon, lấy cảm hứng từ FakeRPG (PVP và sưu tầm), TurnipRPG (farming cộng đồng), Dragon City (lai tạo rồng), và Clash of Clans (chiến tranh clan và trophies). Người chơi đóng vai huấn luyện viên rồng, bắt rồng hoang, lai tạo hybrid, nâng cấp qua tài nguyên, và đấu PVP trong clan được bảo hộ bởi các vị thần Hy Lạp. Bot nhấn mạnh tương tác cộng đồng, yếu tố ngẫu nhiên gây nghiện, và cân bằng công bằng (không pay-to-win nặng). Tất cả tương tác dùng interactive messages (embeds + buttons) với update single-message flow, không timers hay auto-gen để tập trung manual engagement.
 
