@@ -17,7 +17,7 @@ This document serves as a blueprint for development, traceable to objectives, an
 **In-Scope**: Dragon spawning/catching, breeding, clan management/gods (with selection from common gods), PVP simulations (progressive matchmaking), leaderboards, resource economy, Stripe monetization, events (e.g., Olympus Festival). Backend: NestJS with TypeORM/Postgres. Integrations: Mezon SDK (sockets/events), Stripe (payments).  
 **Out-of-Scope**: Base-building, upgrade timers, auto-resource generation, custom UI beyond Mezon embeds/buttons, multi-language support, advanced AI opponents.  
 **Assumptions**: Mezon SDK v1.x stable; freelancers have NestJS experience; Postgres (Docker local) for DB; VPS for deployment.  
-**Dependencies**: npm packages (NestJS, @nestjs/websockets, typeorm, pg, stripe, seedrandom, cron, dotenv, vitest).
+**Dependencies**: npm packages (NestJS, @nestjs/websockets, typeorm, pg, stripe, seedrandom, cron, dotenv, jest).
 
 ### 1.3 Definitions, Acronyms, and Abbreviations
 - **Mezon SDK**: Library for Mezon platform integration (sockets, channels, embeds).  
@@ -243,7 +243,7 @@ project/
 ├── data/                 # gods.json, dragons.json (modular)
 ├── test/                 # Vitest: utils.test.ts
 ├── migrations/           # TypeORM scripts
-└── package.json          # Deps: @nestjs/typeorm, pg, vitest
+└── package.json          # Deps: @nestjs/typeorm, pg, jest
 ```
 
 **Phases and Micro-Tasks** (Granular, max 6h/task; total ~177h):
