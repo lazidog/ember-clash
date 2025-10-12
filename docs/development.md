@@ -4,7 +4,7 @@ Project divided into 4 phases (total ~177h, micro-tasks max 6h for granularity).
 ### Phase 1: Base Structure (Oct 13-17, ~27h)
 |     | Task  |                                                                                                                                                                                                   |
 | --- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [ ] | P1-T1 | Setup TypeORM: Create base User entity (mezonId unique, resources JSONB, trophies=0, stateStack JSONB=[]).                                                                                        |
+| [x] | P1-T1 | Setup TypeORM: Create base User entity (mezonId unique, resources JSONB, trophies=0, stateStack JSONB=[]).                                                                                        |
 | [ ] | P1-T2 | Setup Vitest vitest.config.ts (testMatch: ['**/*.test.ts'], coverage) and run test entities (test get/set user data)                                                                              |
 | [ ] | P1-T3 | Create `buildInteractiveEmbed` factory (`IInteractiveMessageProps` sample main menu buttons ['pvp', 'dragons', 'clan']).                                                                          |
 | [ ] | P1-T4 | State manager: In-memory `Map<userId, {stack: [{name, data, buttons, timestamp}], currentMessageId?}>`. Methods `push`/`pop`/`resetOnNewCommand` (clear stack + timestamp). Validate button.      |
