@@ -5,13 +5,13 @@ export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ unique: true })
+  @Column({ type: "varchar", unique: true })
   mezonId: string;
 
   @Column({ type: "jsonb", default: { gold: 100, elixir: 50, gems: 10 } })
   resources: { gold: number; elixir: number; gems: number };
 
-  @Column({ default: 0 })
+  @Column({ type: "integer", default: 0 })
   trophies: number;
 
   @Column({ type: "jsonb", default: [] })
