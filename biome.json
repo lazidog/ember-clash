@@ -3,6 +3,11 @@
   "organizeImports": {
     "enabled": true
   },
+  "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -13,7 +18,8 @@
         "useButtonType": "off"
       },
       "style": {
-        "useEnumInitializers": "off"
+        "useEnumInitializers": "off",
+        "useImportType": "off"
       },
       "complexity": {
         "noUselessConstructor": "off",

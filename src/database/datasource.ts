@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { appConfig } from "src/config";
-import { DataSource, type DataSourceOptions } from "typeorm";
+import { DataSource, DataSourceOptions } from "typeorm";
 import { SnakeNamingStrategy } from "./snake-naming.strategy";
 
 const isDevEnv = () => {

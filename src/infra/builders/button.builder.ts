@@ -1,5 +1,5 @@
 import {
-  type ButtonComponent,
+  ButtonComponent,
   EButtonMessageStyle,
   EMessageComponentType,
 } from "mezon-sdk";

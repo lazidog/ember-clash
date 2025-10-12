@@ -1,8 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import type {
-  TypeOrmModuleOptions,
-  TypeOrmOptionsFactory,
-} from "@nestjs/typeorm";
+import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
 import { appConfig } from "src/config";
 import { SnakeNamingStrategy } from "src/database/snake-naming.strategy";
 

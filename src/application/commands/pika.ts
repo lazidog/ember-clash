@@ -1,7 +1,7 @@
 import { TypeMessage } from "mezon-sdk";
 import { Command } from "src/infra/decorators/registerCommand.decorator";
-import type { MezonClientService } from "src/infra/mezon/client.service";
-import { type CommandMessage, CommandName } from "../../domain/types";
+import { MezonClientService } from "src/infra/mezon/client.service";
+import { CommandMessage, CommandName } from "../../domain/types";
 import { CommandBase } from "./base";
 
 @Command(CommandName.Pika)

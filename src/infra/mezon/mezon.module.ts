@@ -1,4 +1,4 @@
-import { type DynamicModule, Global, Module } from "@nestjs/common";
+import { DynamicModule, Global, Module } from "@nestjs/common";
 import { MezonClientService } from "./client.service";
 
 @Global()
