@@ -22,9 +22,9 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       migrationsRun: this.isDevEnv(),
       logging: this.isDevEnv(),
       keepConnectionAlive: !this.isDevEnv(),
-      entities: [`${__dirname}/../modules/**/*.entity{.ts,.js}`],
+      entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
       migrations: [`${__dirname}/migrations/*{.ts,.js}`],
-      subscribers: [`${__dirname}/../modules/**/*.subscriber{.ts,.js}`],
+      subscribers: [`${__dirname}/../**/*.subscriber{.ts,.js}`],
       namingStrategy: new SnakeNamingStrategy(),
     } as TypeOrmModuleOptions;
   }
