@@ -1,4 +1,5 @@
 import { DynamicModule, Global, Module } from "@nestjs/common";
+import { appConfig } from "src/config";
 import { MezonClientService } from "./client.service";
 
 @Global()
@@ -11,9 +12,10 @@ export class MezonModule {
         {
           provide: MezonClientService,
           useFactory: async () => {
-            const token = process.env.MEZON_TOKEN;
-            if (!token) return null;
-            const client = new MezonClientService(token);
+            const client = new MezonClientService(
+              appConfig.bot.botId,
+              appConfig.bot.token,
+            );
 
             await client.initializeClient();
 
