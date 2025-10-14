@@ -71,8 +71,9 @@ Project divided into 4 phases (total ~177h, micro-tasks max 6h for granularity).
 | [ ] | F8-T3 | Webhook: Express /webhook; Verify sig, update clan.god + flat buff; Notify.           |
 
 #### Final Tasks
-|     | Task   |                                                                              |
-| --- | ------ | ---------------------------------------------------------------------------- |
-| [ ] | Fin-T1 | Full integration: Route all to gateway; Rate-limit AsyncThrottleQueue.       |
-| [ ] | Fin-T2 | QA: Vitest units/integration; Balance sim (1k breeds/attacks/events); Fixes. |
-| [ ] | Fin-T3 | Deploy: PM2 ecosystem; Docker prod; Optional Redis cache state/leaderboards. |
+|     | Task   |                                                                                  |
+| --- | ------ | -------------------------------------------------------------------------------- |
+| [ ] | Fin-T1 | Full integration: Route all to gateway; Rate-limit AsyncThrottleQueue.           |
+| [ ] | Fin-T2 | QA: Vitest units/integration; Balance sim (1k breeds/attacks/events); Fixes.     |
+| [ ] | Fin-T3 | Deploy: PM2 ecosystem; Docker prod; Optional Redis cache state/leaderboards.     |
+| [ ] | Fin-T4 | Monitoring: Integrate Prometheus and Grafana for system and application metrics. |

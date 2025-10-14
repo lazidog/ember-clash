@@ -73,6 +73,7 @@ Issues: Balance tweaks, new events/dragons (e.g., add counter skill).
 - Prod: PM2 `ecosystem.config.js` + VPS.
 - Env: WILD_CHANNEL_ID (community #wild).
 - Scale: Redis for state cache (Phase 4).
+- Monitoring: Future integration with Prometheus and Grafana.
 
 ## License
 MIT - See [LICENSE](LICENSE).

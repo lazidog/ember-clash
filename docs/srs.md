@@ -139,6 +139,7 @@ EmberClash fills a gap in Mezon's clan ecosystem by providing casual, collaborat
 ### 2.4 Operating Environment
 - Backend: Node.js v20+, NestJS v10+, Postgres v15+.  
 - Deployment: VPS with PM2; HTTPS for Stripe; Docker for local Postgres.  
+- Monitoring: Integration with Prometheus and Grafana for system and application monitoring.
 - Client: Mezon app (iOS/Android/Web) for embeds/buttons.
 
 ### 2.5 Design and Implementation Constraints
