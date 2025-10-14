@@ -14,10 +14,10 @@ This SRS defines the requirements for EmberClash Mezon Bot, an interactive RPG b
 This document serves as a blueprint for development, traceable to objectives, and modular for freelancer implementation.
 
 ### 1.2 Scope
-**In-Scope**: Dragon spawning/catching, breeding, clan management/gods (with selection from common gods), PVP simulations (progressive matchmaking), leaderboards, resource economy, Stripe monetization, events (e.g., Olympus Festival). Backend: NestJS with TypeORM/Postgres. Integrations: Mezon SDK (sockets/events), Stripe (payments).  
+**In-Scope**: Dragon spawning/catching, breeding, clan management/gods (with selection from common gods), PVP simulations (progressive matchmaking), leaderboards, resource economy, Stripe monetization, events (e.g., Olympus Festival). Backend: NestJS with Prisma/Postgres. Integrations: Mezon SDK (sockets/events), Stripe (payments).  
 **Out-of-Scope**: Base-building, upgrade timers, auto-resource generation, custom UI beyond Mezon embeds/buttons, multi-language support, advanced AI opponents.  
 **Assumptions**: Mezon SDK v1.x stable; freelancers have NestJS experience; Postgres (Docker local) for DB; VPS for deployment.  
-**Dependencies**: npm packages (NestJS, @nestjs/websockets, typeorm, pg, stripe, seedrandom, cron, dotenv, jest).
+**Dependencies**: npm packages (NestJS, @nestjs/websockets, prisma, pg, stripe, seedrandom, cron, dotenv, vitest).
 
 ### 1.3 Definitions, Acronyms, and Abbreviations
 - **Mezon SDK**: Library for Mezon platform integration (sockets, channels, embeds).  
@@ -25,7 +25,7 @@ This document serves as a blueprint for development, traceable to objectives, an
 - **PVP**: Player vs. Player battles.  
 - **SRS**: Software Requirements Specification.  
 - **NestJS**: Node.js framework for modular backend.  
-- **TypeORM**: ORM for Postgres relations/migrations.  
+- **Prisma**: ORM for Postgres relations/migrations.  
 - **IInteractiveMessageProps**: Mezon embed + components (buttons/selects) for updates.
 
 ### 1.4 References
@@ -187,7 +187,7 @@ Prioritized by MoSCoW method. Each FR traceable to objectives (e.g., OBJ-001: Co
 - **Usability**: WCAG-compliant embeds (high contrast); intuitive buttons with back navigation (per-user stack reset).
 
 ### 3.4 Data Requirements
-**Entities** (TypeORM, in `src/entities/`):
+**Schema** (Prisma):
 - **User**: { mezonId: string (unique), clanId: number, resources: JSONB {gold:100, elixir:50, gems:10}, trophies: number=0, dragons: Dragon[], stateStack: JSONB=[] }  
 - **Dragon**: { id: number, ownerId: string, name: string, type: string, rarity: enum['common','rare','epic','legendary'], level:0, stats: JSONB {hp,atk,def}, absorbedElixir:0, element: string, skills: string[] }  
 - **Clan**: { mezonId: string (unique), leaderId: string, members: User[], god: string (e.g., 'zeus'), godLevel:1, donationsPool:0, trophies:0 }  
@@ -203,7 +203,7 @@ Dragon/God data modular (JSON configs in `data/` for easy extension).
 
 **Text UML Diagram**:
 ```
-[Mezon SDK (Sockets)] --> [NestJS Gateway (Events: onMessage, onButtonClick)] --> [Modules: DragonService] --> [TypeORM Entities] --> [Postgres]
+[Mezon SDK (Sockets)] --> [NestJS Gateway (Events: onMessage, onButtonClick)] --> [Modules: DragonService] --> [Prisma Entities] --> [Postgres]
 [Stripe Webhook] --> [PaymentService] --> [ClanEntity Update]
 ```
 
@@ -225,25 +225,34 @@ Dragon/God data modular (JSON configs in `data/` for easy extension).
 ### A. Glossary
 - Gateway: NestJS WebSocket handler.  
 - RNG: Seeded random generator.  
-- TypeORM: Postgres ORM for entities/migrations.  
+- Prisma: Postgres ORM for entities/migrations.  
 - Vitest: Fast testing framework.
 
 ### B. Implementation Plan
 **Project Structure**:
 ```
-project/
-├── src/
-│   ├── app.module.ts
-│   ├── main.ts
-│   ├── modules/          # Per-feature (e.g., onboarding.module.ts)
-│   ├── gateways/         # MezonGateway.ts
-│   ├── entities/         # TypeORM: User, Dragon, Clan
-│   ├── utils/            # embed.util.ts, state.manager.ts, rng.util.ts
-│   └── services/         # Shared: battle.service.ts
-├── data/                 # gods.json, dragons.json (modular)
-├── test/                 # Vitest: utils.test.ts
-├── migrations/           # TypeORM scripts
-└── package.json          # Deps: @nestjs/typeorm, pg, jest
+.
+├── src/              # Main application source code
+│   ├── application/  # Application-specific logic (commands, queries, etc.)
+│   │   └── commands/ # Command handlers and definitions
+│   ├── database/     # Database-related modules and services (Prisma)
+│   ├── domain/       # Domain entities and types
+│   └── infra/        # Infrastructure concerns (bot, builders, decorators, Mezon integration, storages)
+│       ├── bot/      # Bot-specific command handling and modules
+│       ├── builders/ # Message and component builders
+│       ├── decorators/ # Custom decorators
+│       ├── mezon/    # Mezon client integration
+│       └── storages/ # Data storage mechanisms
+├── db/               # Database schema, migrations, and related utilities
+│   ├── .scaffdog/    # Scaffolding for data migrations
+│   ├── prisma/       # Prisma schema, data migrations, and database migrations
+│   │   ├── data-migrations/ # Data migration scripts
+│   │   └── migrations/ # Database schema migration files
+│   └── src/          # Generated Prisma client and related code
+│       └── __generated__/ # Generated code
+│           └── fabbrica/ # Fabbrica related generated code
+└── test/             # Integration and unit tests
+    └── integration/  # Integration tests
 ```
 
 **Phases and Micro-Tasks** (Granular, max 6h/task; total ~177h):

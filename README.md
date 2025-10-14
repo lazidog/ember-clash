@@ -26,12 +26,28 @@ Chi tiết data gods/dragons/events ở [data.md](docs/data.md) + [srs.md](docs/
 - **Deployment**: PM2 + Docker (Postgres local); Optional Redis cache Phase 4.
 - **Structure**:
   ```
-  src/
-  ├── app.module.ts     # Imports features
-  ├── gateways/         # MezonGateway (onMessage/onButtonClick)
-  ├── modules/          # OnboardingModule, DragonModule, etc.
-  ├── utils/            # embed.util.ts, state.manager.ts, rng.util.ts
-  ├── data/             # gods.json, dragons.json
+  .
+  ├── src/              # Main application source code
+  │   ├── application/  # Application-specific logic (commands, queries, etc.)
+  │   │   └── commands/ # Command handlers and definitions
+  │   ├── database/     # Database-related modules and services (Prisma)
+  │   ├── domain/       # Domain entities and types
+  │   └── infra/        # Infrastructure concerns (bot, builders, decorators, Mezon integration, storages)
+  │       ├── bot/      # Bot-specific command handling and modules
+  │       ├── builders/ # Message and component builders
+  │       ├── decorators/ # Custom decorators
+  │       ├── mezon/    # Mezon client integration
+  │       └── storages/ # Data storage mechanisms
+  ├── db/               # Database schema, migrations, and related utilities
+  │   ├── .scaffdog/    # Scaffolding for data migrations
+  │   ├── prisma/       # Prisma schema, data migrations, and database migrations
+  │   │   ├── data-migrations/ # Data migration scripts
+  │   │   └── migrations/ # Database schema migration files
+  │   └── src/          # Generated Prisma client and related code
+  │       └── __generated__/ # Generated code
+  │           └── fabbrica/ # Fabbrica related generated code
+  └── test/             # Integration and unit tests
+      └── integration/  # Integration tests
   ```
 
 ## Quick Start
