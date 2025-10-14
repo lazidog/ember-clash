@@ -20,9 +20,9 @@ Bot xây dựng hệ sinh thái nghiện nhưng cân bằng, với tactics > raw
 Chi tiết data gods/dragons/events ở [data.md](docs/data.md) + [srs.md](docs/srs.md).
 
 ## Tech Stack & Architecture
-- **Backend**: NestJS (modular: modules per feature như DragonModule), TypeORM (Postgres entities/relations/migrations), Mezon SDK (sockets/events).
+- **Backend**: NestJS (modular: modules per feature như DragonModule), Prisma (postgres), Mezon SDK (sockets/events).
 - **Reusables**: Per-user state stack (in-memory Map, reset on new *command tránh leak channels); Interactive updates (IInteractiveMessageProps via message.update()); Seeded RNG (seedrandom); Cron (@nestjs/schedule) cho spawns/events.
-- **Testing**: Vitest (>70% coverage).
+- **Testing**: Jest (>70% coverage).
 - **Deployment**: PM2 + Docker (Postgres local); Optional Redis cache Phase 4.
 - **Structure**:
   ```
@@ -30,38 +30,18 @@ Chi tiết data gods/dragons/events ở [data.md](docs/data.md) + [srs.md](docs/
   ├── app.module.ts     # Imports features
   ├── gateways/         # MezonGateway (onMessage/onButtonClick)
   ├── modules/          # OnboardingModule, DragonModule, etc.
-  ├── entities/         # User, Dragon, Clan (TypeORM)
   ├── utils/            # embed.util.ts, state.manager.ts, rng.util.ts
   ├── data/             # gods.json, dragons.json
-  └── migrations/       # TypeORM scripts
   ```
 
 ## Quick Start
 ### Prerequisites
 - Node.js v20+.
-- Postgres (Docker: `docker-compose up`).
+- Postgres (Run `docker-compose up -d` to start the database).
 - Mezon token (.env: MEZON_TOKEN, PG_URI, STRIPE_SECRET).
 
-### Setup
-```bash
-git clone <repo>
-cd emberclash-bot
-pnpm install
-cp .env.example .env  # Fill tokens
-pnpm migration:run    # TypeORM migrations
-pnpm dev              # NestJS dev mode + Vitest watch
-```
-
-### Run Tests
-```bash
-pnpm test             # Vitest all
-pnpm test:watch       # Interactive watch
-```
-
-Test flow: *start → menu embed → Click Dragons → Update sub-embed → *menu elsewhere (reset state).
-
 ### Commands & Interactions
-- Prefix "*": *start (onboard), *menu (main), *feed <id> <amt>, *breed <d1> <d2>, *createclan <name>, *joincclan <id>, *donate <amt>, *attack, *leaderboard <personal/clan>, *inventory, *buypremiumgod <god>.
+- All commands start with the "*" prefix. For example: *start (onboard), *menu (main), *feed <id> <amt>, *breed <d1> <d2>, *createclan <name>, *joincclan <id>, *donate <amt>, *attack, *leaderboard <personal/clan>, *inventory, *buypremiumgod <god>.
 - Buttons: PVP (sub: Search/Assign), Dragons (Inventory/Feed/Breed), Clan (Donate/Join), Go Back/Menu (stack nav).
 - Events: Auto-notify channels (e.g., "Olympus Festival starts!").
 

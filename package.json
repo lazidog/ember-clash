@@ -16,13 +16,14 @@
     "fmt": "biome format src --write --no-errors-on-unmatched",
     "check": "biome check --write --no-errors-on-unmatched",
     "typecheck": "tsc --noEmit",
-    "postinstall": "yarn build",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "migration:generate": "npm run typeorm -- --dataSource=src/database/datasource.ts migration:generate ./src/database/migrations/$npm_config_name",
-    "migration:show": "npm run typeorm -- --dataSource=src/database/datasource.ts migration:show",
-    "migration:run": "npm run typeorm migration:run -- -d src/database/datasource",
-    "migration:revert": "npm run typeorm migration:revert -- -d src/database/datasource",
-    "test": "jest"
+    "postinstall": "yarn build && yarn prisma:gen",
+    "test": "jest",
+    "seed": "ts-node prisma/seed",
+    "prisma:db:push": "prisma db push --schema db/prisma/schema.prisma",
+    "prisma:fmt": "prisma format --schema db/prisma/schema.prisma",
+    "prisma:gen": "prisma generate --schema db/prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --create-only --schema db/prisma/schema.prisma",
+    "prisma:migrate:data": "scaffdog generate"
   },
   "dependencies": {
     "@lazidog/utils": "^1.0.1",
@@ -31,13 +32,11 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/event-emitter": "^3.0.1",
     "@nestjs/platform-express": "^11.0.1",
-    "@nestjs/typeorm": "^10.0.0",
     "mezon-sdk": "^2.8.20",
-    "pg": "^8.11.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.17",
-    "zod": "^4.1.12"
+    "zod": "^4.1.12",
+    "@prisma/client": "^6.17.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
@@ -46,7 +45,6 @@
     "@nestjs/testing": "^11.0.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.3.0",
-    "@types/pg": "^8.10.9",
     "concurrently": "^8.2.2",
     "dotenv": "^16.5.0",
     "husky": "^8.0.3",
@@ -55,6 +53,10 @@
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "@quramy/prisma-fabbrica": "^2.2.1",
+    "@types/uuid": "^9.0.5",
+    "prisma": "^6.17.0",
+    "scaffdog": "^3.0.0"
   }
 }
