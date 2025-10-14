@@ -2,16 +2,18 @@
 Project divided into 4 phases (total ~177h, micro-tasks max 6h for granularity). Each task with Vitest verify. Git branch per phase/task.
 
 ### Phase 1: Base Structure (Oct 13-17, ~27h)
-|     | Task  |                                                                                                                                                                                                   |
-| --- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [x] | P1-T1 | Setup TypeORM: Create base User entity (mezonId unique, resources JSONB, trophies=0, stateStack JSONB=[]).                                                                                        |
-| [x] | P1-T2 | Setup Jest and run test entities (test get/set user data)                                                                                                                                         |
-| [ ] | P1-T3 | Create `buildInteractiveEmbed` factory (`IInteractiveMessageProps` sample main menu buttons ['pvp', 'dragons', 'clan']).                                                                          |
-| [ ] | P1-T4 | State manager: In-memory `Map<userId, {stack: [{name, data, buttons, timestamp}], currentMessageId?}>`. Methods `push`/`pop`/`resetOnNewCommand` (clear stack + timestamp). Validate button.      |
-| [ ] | P1-T5 | Update gateway: On "*command", reset state + send/update main embed. On button: Check state top + userId match, push + updateMessage({embed, components}). Ignore mismatch (error embed + reset). |
-| [ ] | P1-T6 | "Go Back"/"Menu" logic: Pop/update prev state; reset + main embed. Timeout check (>15min → force reset embed).                                                                                    |
-| [ ] | P1-T7 | RNG & Cron: seedrandom util. Cron spawns (env `WILD_CHANNEL_ID`).                                                                                                                                 |
-| [ ] | P1-T8 | Error/Throttle: Try-catch error embed + "Menu" reset. Per-user throttle (Map counter).                                                                                                            |
+|     | Task    |                                                                                                                                                                                                   |
+| --- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [x] | P1-T1   | Setup TypeORM: Create base User entity (mezonId unique, resources JSONB, trophies=0, stateStack JSONB=[]).                                                                                        |
+| [x] | P1-T2   | Setup Jest and run test entities (test get/set user data)                                                                                                                                         |
+| [x] | P1-T1.1 | TypeORM -> Prisma                                                                                                                                                                                 |
+| [ ] | P1-T2.1 | Jest -> Vitest                                                                                                                                                                                    |
+| [ ] | P1-T3   | Create `buildInteractiveEmbed` factory (`IInteractiveMessageProps` sample main menu buttons ['pvp', 'dragons', 'clan']).                                                                          |
+| [ ] | P1-T4   | State manager: In-memory `Map<userId, {stack: [{name, data, buttons, timestamp}], currentMessageId?}>`. Methods `push`/`pop`/`resetOnNewCommand` (clear stack + timestamp). Validate button.      |
+| [ ] | P1-T5   | Update gateway: On "*command", reset state + send/update main embed. On button: Check state top + userId match, push + updateMessage({embed, components}). Ignore mismatch (error embed + reset). |
+| [ ] | P1-T6   | "Go Back"/"Menu" logic: Pop/update prev state; reset + main embed. Timeout check (>15min → force reset embed).                                                                                    |
+| [ ] | P1-T7   | RNG & Cron: seedrandom util. Cron spawns (env `WILD_CHANNEL_ID`).                                                                                                                                 |
+| [ ] | P1-T8   | Error/Throttle: Try-catch error embed + "Menu" reset. Per-user throttle (Map counter).                                                                                                            |
 
 ### Phase 2: Core Features (Oct 18-31, ~60h)
 #### Feature 1: Onboarding & Menu
