@@ -22,7 +22,7 @@ Chi tiết data gods/dragons/events ở [data.md](docs/data.md) + [srs.md](docs/
 ## Tech Stack & Architecture
 - **Backend**: NestJS (modular: modules per feature như DragonModule), Prisma (postgres), Mezon SDK (sockets/events).
 - **Reusables**: Per-user state stack (in-memory Map, reset on new *command tránh leak channels); Interactive updates (IInteractiveMessageProps via message.update()); Seeded RNG (seedrandom); Cron (@nestjs/schedule) cho spawns/events.
-- **Testing**: Jest (>70% coverage).
+- **Testing**: Vitest (>70% coverage).
 - **Deployment**: PM2 + Docker (Postgres local); Optional Redis cache Phase 4.
 - **Structure**:
   ```

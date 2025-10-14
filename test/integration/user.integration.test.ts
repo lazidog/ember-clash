@@ -1,16 +1,19 @@
+import { truncateAllTables } from "test/utils/truncate";
 import { prisma } from "../prisma";
 
-describe("User Integration", () => {
-  beforeEach(async () => {
-    await prisma.user.deleteMany({});
+describe("Database", () => {
+  beforeAll(async () => {
+    vi.clearAllMocks();
+    vi.clearAllTimers();
+    await truncateAllTables();
   });
 
-  afterEach(async () => {
-    await prisma.user.deleteMany({});
+  afterAll(async () => {
+    await truncateAllTables();
   });
 
   it("should create and find a user", async () => {
-    const user = await prisma.user.create({
+    const _user = await prisma.user.create({
       data: {
         mezonId: "mezon_id",
       },
