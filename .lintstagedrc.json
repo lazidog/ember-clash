@@ -1,1 +1,6 @@
-{ "*.{js,jsx,ts,tsx}": ["pnpm check"] }
+{
+  "*.{js,jsx,ts,tsx}": [
+    "pnpm check"
+  ],
+  "*.prisma": "pnpm prisma:fmt"
+}

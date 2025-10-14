@@ -1,0 +1,21 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DB_URL")
+  directUrl = env("DB_DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator fabbrica {
+  provider    = "prisma-fabbrica"
+  noTranspile = true // If set true, this generator only generates raw .ts file and stop to transpile to .js and .d.ts
+}
+
+model User {
+  id      String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  mezonId String @unique
+
+  @@map("users")
+}

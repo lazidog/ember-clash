@@ -1,21 +1,28 @@
-import { AppDataSource } from "../../src/database/datasource";
-import { User } from "../../src/entities/user.entity";
+import { prisma } from "../prisma";
 
 describe("User Integration", () => {
+  beforeEach(async () => {
+    await prisma.user.deleteMany({});
+  });
+
+  afterEach(async () => {
+    await prisma.user.deleteMany({});
+  });
+
   it("should create and find a user", async () => {
-    const userRepository = AppDataSource.getRepository(User);
+    const user = await prisma.user.create({
+      data: {
+        mezonId: "mezon_id",
+      },
+    });
 
-    const user = new User();
-    user.mezonId = "mezon_id";
-
-    await userRepository.save(user);
-
-    const foundUser = await userRepository.findOneByOrFail({
-      mezonId: "mezon_id",
+    const foundUser = await prisma.user.findUniqueOrThrow({
+      where: {
+        mezonId: "mezon_id",
+      },
     });
 
     expect(foundUser).toBeDefined();
     expect(foundUser.mezonId).toBe("mezon_id");
-    expect(foundUser.resources.gems).toBe(10);
   });
 });
