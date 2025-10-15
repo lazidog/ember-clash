@@ -11,12 +11,12 @@ export class PikaCommand extends CommandBase<CommandMessage> {
   }
 
   async execute(_args: string[]): Promise<void> {
-    const dmClan = await this.client.clans.fetch("0");
+    const dmClan = this.client.clans.get("0");
     const recipientUserId =
       this.mezonMessage.references?.at(0)?.message_sender_id ||
       this.message.mentions?.at(0)?.user_id;
 
-    if (!recipientUserId) return;
+    if (!recipientUserId || !dmClan) return;
     const user = await dmClan.users.fetch(recipientUserId);
     if (!user) return;
 
