@@ -15,13 +15,13 @@ export class MenuBackCommand extends CommandBase<ActionMessage> {
 
   async execute(_args: unknown): Promise<void> {
     // TODO: change to stack after implement state manager
-    const actionIdBuilder = new ActionIdBuilder(this.userId);
     const menuButtonsRow: IMessageActionRow = {
       components: [],
     };
     mainMenu.buttons.map((button) => {
-      actionIdBuilder.setAction(button.command);
-      const id = actionIdBuilder.build();
+      const id = new ActionIdBuilder(this.userId)
+        .setAction(button.command)
+        .build();
       const menuButton = new ButtonBuilder()
         .setId(id)
         .setLabel(button.label)

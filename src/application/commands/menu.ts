@@ -22,13 +22,13 @@ export class MenuCommand extends CommandBase<CommandMessage> {
   }
 
   async execute(_args: string[]): Promise<void> {
-    const actionIdBuilder = new ActionIdBuilder(this.userId);
     const menuButtonsRow: IMessageActionRow = {
       components: [],
     };
     mainMenu.buttons.map((button) => {
-      actionIdBuilder.setAction(button.command);
-      const id = actionIdBuilder.build();
+      const id = new ActionIdBuilder(this.userId)
+        .setAction(button.command)
+        .build();
       const menuButton = new ButtonBuilder()
         .setId(id)
         .setLabel(button.label)

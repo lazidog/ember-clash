@@ -19,13 +19,13 @@ export class MenuDragonsCommand extends CommandBase<ActionMessage> {
   }
 
   async execute(_args: unknown): Promise<void> {
-    const actionIdBuilder = new ActionIdBuilder(this.userId);
     const menuButtonsRow: IMessageActionRow = {
       components: [],
     };
     dragonsMenu.buttons.map((button) => {
-      actionIdBuilder.setAction(button.command);
-      const id = actionIdBuilder.build();
+      const id = new ActionIdBuilder(this.userId)
+        .setAction(button.command)
+        .build();
       const menuButton = new ButtonBuilder()
         .setId(id)
         .setLabel(button.label)
