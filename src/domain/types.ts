@@ -14,9 +14,9 @@ import { CommandBase } from "../application/commands/base";
  */
 export type CommandClass<
   TMessage extends MessageType = MessageType,
-  T extends CommandBase = CommandBase,
+  T extends CommandBase<TMessage> = CommandBase<TMessage>,
 > = {
-  new (clientService: MezonClientService, message: TMessage): T;
+  new (clientService: MezonClientService, ...args: unknown[]): T;
 };
 
 export enum CommandName {

@@ -32,9 +32,9 @@ export abstract class CommandBase<TMessage extends MessageType = MessageType> {
     return this.mezonMessage;
   }
 
-  protected abstract execute(args: string[]): Promise<void>;
+  protected abstract execute(args: unknown): Promise<void>;
 
-  async handle(message: TMessage, args: string[]): Promise<void> {
+  async handle(message: TMessage, args: unknown): Promise<void> {
     this.message = message;
     const mezonMessage = await this.getMessage();
     if (!mezonMessage) return;

@@ -1,8 +1,8 @@
 import {} from "mezon-sdk";
 import { CommandAndActionName } from "src/domain/types";
 
-const idSeparator = "|";
-const keySeparator = ":";
+export const idSeparator = "|";
+export const keySeparator = ":";
 
 export class ActionIdBuilder {
   private map: Map<string, string> = new Map();
