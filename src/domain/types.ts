@@ -14,22 +14,30 @@ import { CommandBase } from "../application/commands/base";
  */
 export type CommandClass<
   TMessage extends MessageType = MessageType,
-  T extends CommandBase = CommandBase,
+  T extends CommandBase<TMessage> = CommandBase<TMessage>,
 > = {
-  new (clientService: MezonClientService, message: TMessage): T;
+  new (clientService: MezonClientService, ...args: unknown[]): T;
 };
 
 export enum CommandName {
   Pika = "pika",
+  Menu = "menu",
 }
 
 export enum ActionName {
   Example = "example",
+  MenuBack = "menu_back",
+  MenuBattle = "menu_battle",
+  MenuDragons = "menu_dragons",
 }
 
 export interface CommandRegistry {
   [CommandName.Pika]: CommandClass<CommandMessage>;
+  [CommandName.Menu]: CommandClass<CommandMessage>;
   [ActionName.Example]: CommandClass<ActionMessage>;
+  [ActionName.MenuBack]: CommandClass<ActionMessage>;
+  [ActionName.MenuBattle]: CommandClass<ActionMessage>;
+  [ActionName.MenuDragons]: CommandClass<ActionMessage>;
 }
 
 export interface CommandMessage extends ChannelMessage {
