@@ -9,6 +9,7 @@ export abstract class CommandBase<TMessage extends MessageType = MessageType> {
 
   protected mezonMessage!: MezonMessage;
   protected mezonChannel!: TextChannel;
+  protected userId!: string;
   protected message!: TMessage;
 
   constructor(protected clientService: MezonClientService) {
@@ -17,11 +18,16 @@ export abstract class CommandBase<TMessage extends MessageType = MessageType> {
 
   protected async getMessage() {
     if (!this.mezonMessage) {
-      const { channel_id: channelId, message_id: messageId } = this.message;
+      const {
+        channel_id: channelId,
+        message_id: messageId,
+        sender_id: userId,
+      } = this.message;
       if (!channelId || !messageId) return;
 
       this.mezonChannel = await this.client.channels.fetch(channelId);
       this.mezonMessage = await this.mezonChannel.messages.fetch(messageId);
+      this.userId = userId;
     }
     return this.mezonMessage;
   }

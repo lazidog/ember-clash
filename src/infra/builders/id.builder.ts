@@ -1,9 +1,24 @@
-import { ActionName } from "../../domain/types";
+import {} from "mezon-sdk";
+import { CommandAndActionName } from "src/domain/types";
 
-export function exampleSelectorId(): string {
-  return "example_selector";
-}
+const idSeparator = "|";
+const keySeparator = ":";
 
-export function doSomethingId(exampleId: string): string {
-  return `${ActionName.Example}_${exampleId}`;
+export class ActionIdBuilder {
+  private map: Map<string, string> = new Map();
+
+  constructor(private readonly userId: string) {
+    this.map.set("userId", this.userId);
+  }
+
+  setAction(action: CommandAndActionName): this {
+    this.map.set("action", action);
+    return this;
+  }
+
+  build(): string {
+    return Array.from(this.map.entries())
+      .map(([key, value]) => `${key}${keySeparator}${value}`)
+      .join(idSeparator);
+  }
 }

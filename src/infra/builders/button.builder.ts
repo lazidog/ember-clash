@@ -13,7 +13,7 @@ export class ButtonBuilder {
       type: EMessageComponentType.BUTTON,
       component: {
         label: "",
-        style: EButtonMessageStyle.PRIMARY,
+        style: EButtonMessageStyle.SECONDARY,
       },
     };
   }
