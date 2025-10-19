@@ -161,6 +161,18 @@ EmberClash fills a gap in Mezon's clan ecosystem by providing casual, collaborat
 - **Software Interfaces**: Mezon SDK (client.on('message'), channel.send({embed})); Stripe API.  
 - **Communication Interfaces**: WebSockets for real-time (NestJS Gateways).
 
+#### 3.1.1 User Interaction Flow
+The `UserInteractionManager` is responsible for managing the state and flow of a user's interactions with the bot's interactive messages. This ensures a coherent, single-threaded experience for each user.
+
+- **Managed vs. Unmanaged Actions**:
+  - **Managed**: The manager exclusively handles stateful action flows that belong to a specific user's session. This includes multi-step processes like navigating menus (`*menu`), breeding dragons (`*breed`), or feeding them (`*feed`).
+  - **Unmanaged**: Common, stateless actions are not tracked. For example, catching a wild dragon is a one-off event and does not require state management.
+
+- **Interaction Expiration and Invalidation**:
+  - **Expiration**: When a user interacts with a message, a session timer begins. If the user does not perform any further action on that message within a specified timeout period, the interaction is marked as "expired." Any subsequent attempt to use the buttons on that message will be ignored. The user must issue a new command (e.g., `*menu`) to receive a new, valid interactive message.
+  - **Invalidation by New Command**: If a user has a valid interactive message but decides to issue a new command, the bot will respond with a new interactive message. This action immediately invalidates the previous one. Any attempt to interact with the old message will be considered a "forbidden" action and will be rejected. The user is only permitted to interact with the most recently generated message to prevent state conflicts.
+
+
 ### 3.2 Functional Requirements
 Prioritized by MoSCoW method. Each FR traceable to objectives (e.g., OBJ-001: Core Loop).
 

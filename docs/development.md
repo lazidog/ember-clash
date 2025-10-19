@@ -2,18 +2,15 @@
 Project divided into 4 phases (total ~177h, micro-tasks max 6h for granularity). Each task with Vitest verify. Git branch per phase/task.
 
 ### Phase 1: Base Structure (Oct 13-17, ~27h)
-|     | Task    |                                                                                                                                                                                                   |
-| --- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [x] | P1-T1   | Setup TypeORM: Create base User entity (mezonId unique, resources JSONB, trophies=0, stateStack JSONB=[]).                                                                                        |
-| [x] | P1-T2   | Setup Jest and run test entities (test get/set user data)                                                                                                                                         |
-| [x] | P1-T1.1 | TypeORM -> Prisma                                                                                                                                                                                 |
-| [x] | P1-T2.1 | Jest -> Vitest                                                                                                                                                                                    |
-| [x] | P1-T3   | Menu buttons workflows                                                                                                                                                                            |
-| [ ] | P1-T4   | State manager: In-memory `Map<userId, {stack: [{name, data, buttons, timestamp}], currentMessageId?}>`. Methods `push`/`pop`/`resetOnNewCommand` (clear stack + timestamp). Validate button.      |
-| [ ] | P1-T5   | Update gateway: On "*command", reset state + send/update main embed. On button: Check state top + userId match, push + updateMessage({embed, components}). Ignore mismatch (error embed + reset). |
-| [ ] | P1-T6   | "Go Back"/"Menu" logic: Pop/update prev state; reset + main embed. Timeout check (>15min → force reset embed).                                                                                    |
-| [ ] | P1-T7   | RNG & Cron: seedrandom util. Cron spawns (env `WILD_CHANNEL_ID`).                                                                                                                                 |
-| [ ] | P1-T8   | Error/Throttle: Try-catch error embed + "Menu" reset. Per-user throttle (Map counter).                                                                                                            |
+|     | Task    |                                                                                                                          |
+| --- | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+| [x] | P1-T1   | Setup TypeORM: Create base User entity (mezonId unique, resources JSONB, trophies=0, stateStack JSONB=[]).               |
+| [x] | P1-T2   | Setup Jest and run test entities (test get/set user data)                                                                |
+| [x] | P1-T1.1 | TypeORM -> Prisma                                                                                                        |
+| [x] | P1-T2.1 | Jest -> Vitest                                                                                                           |
+| [x] | P1-T3   | Menu buttons workflows                                                                                                   |
+| [ ] | P1-T4   | User interactions management                                                                                             |
+| [ ] | P1-T5   | Interaction guard: separate common action (everyone can interact) & personal action (only user who created can interact) |
 
 ### Phase 2: Core Features (Oct 18-31, ~60h)
 #### Feature 1: Onboarding & Menu
@@ -23,12 +20,12 @@ Project divided into 4 phases (total ~177h, micro-tasks max 6h for granularity).
 | [ ] | F1-T2 | *menu: Reset state + update/send main embed (buttons: PVP, Dragons, Clan).                                                                             |
 | [ ] | F1-T3 | Main menu buttons: E.g., "Dragons" → push 'dragons' state, update sub-buttons (Inventory, Catch, Go Back).                                             |
 #### Feature 2: Dragon Catching & Inventory
-|     | Task  |                                                                                                                                                 |
-| --- | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| [ ] | F2-T1 | Integrate spawn cron: Send interactive embed ("[Dragon] appeared! Catch?") + temp state 5min. Load from dragons.json.                           |
-| [ ] | F2-T2 | Catch button: Gems check/cap; RNG roll (rarity weights); Success: Create Dragon entity, push user.dragons; Update "Caught!" + Inventory button. |
-| [ ] | F2-T3 | Fail: Update "Missed!" + Try Again (deduct gems only final).                                                                                    |
-| [ ] | F2-T4 | Inventory button: Update embed list (emojis/stats from dragons.json); Buttons: Feed, Breed, Go Back.                                            |
+|     | Task  |                                                                                                                                                                                         |
+| --- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [ ] | F2-T1 | Integrate spawn cron: RNG & Cron: seedrandom util. Cron spawns (env `WILD_CHANNEL_ID`). Send interactive embed ("[Dragon] appeared! Catch?") + temp state 5min. Load from dragons.json. |
+| [ ] | F2-T2 | Catch button: Gems check/cap; RNG roll (rarity weights); Success: Create Dragon entity, push user.dragons; Update "Caught!" + Inventory button.                                         |
+| [ ] | F2-T3 | Fail: Update "Missed!" + Try Again (deduct gems only final).                                                                                                                            |
+| [ ] | F2-T4 | Inventory button: Update embed list (emojis/stats from dragons.json); Buttons: Feed, Breed, Go Back.                                                                                    |
 #### Feature 3: Dragon Feed & Breed
 |     | Task  |                                                                                                                                                                 |
 | --- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
