@@ -6,7 +6,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    setupFiles: ["./test/vitest.setup.ts"],
     env: {
       DB_DIRECT_URL: "postgresql://postgres:postgres@0.0.0.0:6544/postgres",
       DB_URL:
