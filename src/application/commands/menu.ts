@@ -20,13 +20,10 @@ export const mainMenu: MenuNode = {
   ],
 };
 
-@Command(CommandName.Menu)
-export class MenuCommand extends CommandBase<CommandMessage> {
-  constructor(protected clientService: MezonClientService) {
-    super(clientService);
-  }
-
-  async execute(_args: string[]): Promise<void> {
+abstract class MenuBase<
+  T extends CommandMessage | ActionMessage,
+> extends CommandBase<T> {
+  protected buildMenu(): IMessageActionRow {
     const menuButtonsRow: IMessageActionRow = {
       components: [],
     };
@@ -40,6 +37,18 @@ export class MenuCommand extends CommandBase<CommandMessage> {
         .build();
       menuButtonsRow.components.push(menuButton);
     });
+    return menuButtonsRow;
+  }
+}
+
+@Command(CommandName.Menu)
+export class MenuCommand extends MenuBase<CommandMessage> {
+  constructor(protected clientService: MezonClientService) {
+    super(clientService);
+  }
+
+  async execute(_args: string[]): Promise<void> {
+    const menuButtonsRow = this.buildMenu();
 
     const replyMessage = await this.mezonMessage.reply({
       components: [menuButtonsRow],
@@ -53,25 +62,13 @@ export class MenuCommand extends CommandBase<CommandMessage> {
 }
 
 @Command(ActionName.MenuAction)
-export class MenuAction extends CommandBase<ActionMessage> {
+export class MenuAction extends MenuBase<ActionMessage> {
   constructor(protected clientService: MezonClientService) {
     super(clientService);
   }
 
   async execute(_args: string[]): Promise<void> {
-    const menuButtonsRow: IMessageActionRow = {
-      components: [],
-    };
-    mainMenu.buttons.map((button) => {
-      const id = new ActionIdBuilder(this.userId)
-        .setAction(button.command)
-        .build();
-      const menuButton = new ButtonBuilder()
-        .setId(id)
-        .setLabel(button.label)
-        .build();
-      menuButtonsRow.components.push(menuButton);
-    });
+    const menuButtonsRow = this.buildMenu();
 
     const updatedMessage = await this.mezonMessage.update({
       components: [menuButtonsRow],
