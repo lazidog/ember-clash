@@ -32,8 +32,14 @@ export class MenuDragonsCommand extends CommandBase<ActionMessage> {
         .build();
       menuButtonsRow.components.push(menuButton);
     });
-    this.mezonMessage.update({
+
+    const updatedMessage = await this.mezonMessage.update({
       components: [menuButtonsRow],
+    });
+
+    this.userInteractionManager.push(this.userId, updatedMessage.message_id, {
+      command: ActionName.MenuDragons,
+      data: _args,
     });
   }
 }

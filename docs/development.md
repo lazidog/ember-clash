@@ -9,7 +9,7 @@ Project divided into 4 phases (total ~177h, micro-tasks max 6h for granularity).
 | [x] | P1-T1.1 | TypeORM -> Prisma                                                                                                        |
 | [x] | P1-T2.1 | Jest -> Vitest                                                                                                           |
 | [x] | P1-T3   | Menu buttons workflows                                                                                                   |
-| [ ] | P1-T4   | User interactions management                                                                                             |
+| [x] | P1-T4   | User interactions management                                                                                             |
 | [ ] | P1-T5   | Interaction guard: separate common action (everyone can interact) & personal action (only user who created can interact) |
 
 ### Phase 2: Core Features (Oct 18-31, ~60h)
