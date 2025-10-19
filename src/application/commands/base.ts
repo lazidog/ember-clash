@@ -16,28 +16,26 @@ export abstract class CommandBase<TMessage extends MessageType = MessageType> {
     this.client = clientService.getClient();
   }
 
-  protected async getMessage() {
-    if (!this.mezonMessage) {
-      const {
-        channel_id: channelId,
-        message_id: messageId,
-        sender_id: userId,
-      } = this.message;
-      if (!channelId || !messageId) return;
+  // need to be called on every single command to refresh the properties (channel, message, user,...)
+  // otherwise they will be stale
+  private async init() {
+    this.userId =
+      this.message.type === "action"
+        ? this.message.user_id
+        : this.message.sender_id;
+    const { channel_id: channelId, message_id: messageId } = this.message;
 
-      this.mezonChannel = await this.client.channels.fetch(channelId);
-      this.mezonMessage = await this.mezonChannel.messages.fetch(messageId);
-      this.userId = userId;
-    }
-    return this.mezonMessage;
+    if (!channelId || !messageId) return;
+    this.mezonChannel = await this.client.channels.fetch(channelId);
+    this.mezonMessage = await this.mezonChannel.messages.fetch(messageId);
   }
 
   protected abstract execute(args: unknown): Promise<void>;
 
   async handle(message: TMessage, args: unknown): Promise<void> {
     this.message = message;
-    const mezonMessage = await this.getMessage();
-    if (!mezonMessage) return;
+    await this.init();
+    if (!this.mezonMessage) return;
 
     await this.execute(args);
   }
