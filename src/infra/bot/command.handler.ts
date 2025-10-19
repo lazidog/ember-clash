@@ -13,10 +13,7 @@ export class CommandHandler {
   constructor(private moduleRef: ModuleRef) {}
 
   async handleMessage(message: ChannelMessage) {
-    const messageContent = message.content.t;
-    if (!messageContent?.startsWith("*")) return;
-
-    const { commandName, args } = extractCommandMessage(messageContent);
+    const { commandName, args } = extractCommandMessage(message);
     if (!commandName) return;
 
     const Command = getCommand(commandName);
