@@ -1,7 +1,10 @@
+import { Inject } from "@nestjs/common";
 import { MezonClient } from "mezon-sdk";
 import { Message as MezonMessage } from "mezon-sdk/dist/cjs/mezon-client/structures/Message";
 import { TextChannel } from "mezon-sdk/dist/cjs/mezon-client/structures/TextChannel";
+import { MessageBuilder } from "src/infra/builders/message.builder";
 import { MezonClientService } from "src/infra/mezon/client.service";
+import { UserInteractionManager } from "src/infra/storages/userInteractionManager";
 import { MessageType } from "../../domain/types";
 
 export abstract class CommandBase<TMessage extends MessageType = MessageType> {
@@ -11,6 +14,9 @@ export abstract class CommandBase<TMessage extends MessageType = MessageType> {
   protected mezonChannel!: TextChannel;
   protected userId!: string;
   protected message!: TMessage;
+
+  @Inject()
+  protected userInteractionManager: UserInteractionManager;
 
   constructor(protected clientService: MezonClientService) {
     this.client = clientService.getClient();
@@ -36,6 +42,30 @@ export abstract class CommandBase<TMessage extends MessageType = MessageType> {
     this.message = message;
     await this.init();
     if (!this.mezonMessage) return;
+
+    switch (this.message.type) {
+      case "action": {
+        const isValidMessage = this.userInteractionManager.validateMessage(
+          this.userId,
+          this.message.message_id,
+        );
+        if (!isValidMessage) {
+          await this.mezonChannel.send(
+            new MessageBuilder()
+              .addText(
+                "Session expired/invalid. Use *menu to start new session.",
+              )
+              .markdown()
+              .build(),
+          );
+          return;
+        }
+        break;
+      }
+      case "command": {
+        this.userInteractionManager.reset(this.userId);
+      }
+    }
 
     await this.execute(args);
   }

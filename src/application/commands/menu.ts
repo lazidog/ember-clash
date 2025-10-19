@@ -4,7 +4,12 @@ import { ActionIdBuilder } from "src/infra/builders/actionId.builder";
 import { ButtonBuilder } from "src/infra/builders/button.builder";
 import { Command } from "src/infra/decorators/registerCommand.decorator";
 import { MezonClientService } from "src/infra/mezon/client.service";
-import { ActionName, CommandMessage, CommandName } from "../../domain/types";
+import {
+  ActionMessage,
+  ActionName,
+  CommandMessage,
+  CommandName,
+} from "../../domain/types";
 import { CommandBase } from "./base";
 
 export const mainMenu: MenuNode = {
@@ -35,8 +40,46 @@ export class MenuCommand extends CommandBase<CommandMessage> {
         .build();
       menuButtonsRow.components.push(menuButton);
     });
-    this.mezonMessage.reply({
+
+    const replyMessage = await this.mezonMessage.reply({
       components: [menuButtonsRow],
+    });
+
+    this.userInteractionManager.push(this.userId, replyMessage.message_id, {
+      command: ActionName.MenuAction,
+      data: _args,
+    });
+  }
+}
+
+@Command(ActionName.MenuAction)
+export class MenuAction extends CommandBase<ActionMessage> {
+  constructor(protected clientService: MezonClientService) {
+    super(clientService);
+  }
+
+  async execute(_args: string[]): Promise<void> {
+    const menuButtonsRow: IMessageActionRow = {
+      components: [],
+    };
+    mainMenu.buttons.map((button) => {
+      const id = new ActionIdBuilder(this.userId)
+        .setAction(button.command)
+        .build();
+      const menuButton = new ButtonBuilder()
+        .setId(id)
+        .setLabel(button.label)
+        .build();
+      menuButtonsRow.components.push(menuButton);
+    });
+
+    const updatedMessage = await this.mezonMessage.update({
+      components: [menuButtonsRow],
+    });
+
+    this.userInteractionManager.push(this.userId, updatedMessage.message_id, {
+      command: ActionName.MenuAction,
+      data: _args,
     });
   }
 }

@@ -26,6 +26,7 @@ export enum CommandName {
 
 export enum ActionName {
   Example = "example",
+  MenuAction = "menu_action",
   MenuBack = "menu_back",
   MenuBattle = "menu_battle",
   MenuDragons = "menu_dragons",
@@ -34,6 +35,7 @@ export enum ActionName {
 export interface CommandRegistry {
   [CommandName.Pika]: CommandClass<CommandMessage>;
   [CommandName.Menu]: CommandClass<CommandMessage>;
+  [ActionName.MenuAction]: CommandClass<ActionMessage>;
   [ActionName.Example]: CommandClass<ActionMessage>;
   [ActionName.MenuBack]: CommandClass<ActionMessage>;
   [ActionName.MenuBattle]: CommandClass<ActionMessage>;
