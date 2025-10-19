@@ -1,6 +1,7 @@
 import {
   ButtonComponent,
   ChannelMessageContent,
+  EMarkdownType,
   SelectComponent,
 } from "mezon-sdk";
 
@@ -26,6 +27,18 @@ export class MessageBuilder {
     this._message.components?.push({
       components: selectors,
     });
+    return this;
+  }
+
+  addText(text: string): this {
+    this._message.t = text;
+    return this;
+  }
+
+  markdown(): this {
+    this._message.mk = [
+      { type: EMarkdownType.PRE, s: 0, e: this._message.t?.length },
+    ];
     return this;
   }
 
